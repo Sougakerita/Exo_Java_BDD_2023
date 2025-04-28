@@ -37,7 +37,7 @@ public class Exo1 {
         System.out.print("Entrez un nombre : ");
         int n = scanner.nextInt();
 
-        for (int i = 0; i < n; i++) {
+        for (int i=0;i<n;i++) {
             for (int j = 0; j < n; j++) {
                 System.out.print("*");
             }
