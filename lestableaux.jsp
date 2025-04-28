@@ -98,4 +98,12 @@ Ecrire un programme afin de faire la somme de toutes les valeurs saisies par l'u
        int intValeur = Integer.parseInt(valeur);
        if (Math.abs(intValeur) < Math.abs(valeurProcheDeZero2) ||
            (Math.abs(intValeur) == Math.abs(valeurProcheDeZero2) && intValeur > valeurProcheDeZero2)) {
-... (10lignes restantes)
+           valeurProcheDeZero2 = intValeur;
+       }
+   } %>
+<p>La valeur la plus proche de 0 (2° version) est : <%= valeurProcheDeZero2 %></p>
+
+<% } %>
+<p><a href="index.html">Retour au sommaire</a></p>
+</body>
+</html>
