@@ -1,42 +1,79 @@
-import java.util.*;
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
 
-public class Solution {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-
-        int letterWidth = in.nextInt();   // Width of each letter
-        int letterHeight = in.nextInt();  // Height of each letter
-        in.nextLine(); // Consume the newline
-
-        String text = in.nextLine().toUpperCase(); // Convert input text to uppercase
-
-        // Read the ASCII art alphabet (A-Z + ?)
-        String[] asciiAlphabet = new String[letterHeight];
-        for (int i = 0; i < letterHeight; i++) {
-            asciiAlphabet[i] = in.nextLine();
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ASCII Art</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
         }
+        .ascii-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        pre {
+            font-family: monospace;
+            font-size: 16px;
+            margin: 0;
+        }
+        input[type="text"] {
+            font-size: 18px;
+            padding: 5px;
+            width: 300px;
+        }
+        button {
+            padding: 6px 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>ASCII Art Generator</h1>
 
-        // For each row of the ASCII art
-        for (int row = 0; row < letterHeight; row++) {
-            StringBuilder line = new StringBuilder();
+    <form method="post">
+        <label for="inputText">Entrez un mot :</label>
+        <input type="text" id="inputText" name="inputText" required />
+        <button type="submit">Afficher</button>
+    </form>
 
-            for (char character : text.toCharArray()) {
-                int index;
+    <div class="ascii-container">
+    <%
+        String inputText = request.getParameter("inputText");
+        if (inputText != null && !inputText.trim().isEmpty()) {
+            String textToPrint = inputText.toUpperCase();
 
-                // Find the index in ASCII art (A=0, B=1, ..., Z=25, others=?=26)
-                if (character >= 'A' && character <= 'Z') {
-                    index = character - 'A';
-                } else {
-                    index = 26; // Index of '?'
+            int L = 4;
+            int H = 5;
+
+            String[] asciiAlphabet = {
+                " #  ##   ## ##  ### ###  ## # # ###  ## # # #   # # ###  #  ##   #  ##   ## ### # # # # # # # # # # ### ### ",
+                "# # # # #   # # #   #   #   # #  #    # # # #   ### # # # # # # # # # # #    #  # # # # # # # # # #   #   # ",
+                "### ##  #   # # ##  ##  # # ###  #    # ##  #   ### # # # # ##  # # ##   #   #  # # # # ###  #   #   #   ## ",
+                "# # # # #   # # #   #   # # # #  #  # # # # #   # # # # # # #    ## # #   #  #  # # # # ### # #  #  #       ",
+                "# # ##   ## ##  ### #    ## # # ###  #  # # ### # # # #  #  #     # # # ##   #  ###  #  # # # #  #  ###  #  "
+            };
+
+            for (int row = 0; row < H; row++) {
+                out.print("<pre>");
+                for (char ch : textToPrint.toCharArray()) {
+                    int index = (ch >= 'A' && ch <= 'Z') ? ch - 'A' : 26;
+                    int start = index * L;
+                    out.print(asciiAlphabet[row].substring(start, start + L));
                 }
-
-                int start = index * letterWidth;
-                int end = start + letterWidth;
-
-                line.append(asciiAlphabet[row], start, end);
+                out.println("</pre>");
             }
-
-            System.out.println(line);
         }
-    }
-}
+    %>
+    </div>
+</body>
+</html>
